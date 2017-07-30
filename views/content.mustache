@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>guess the word</h1>
+
+    <p>{{#spaces}} _ {{/spaces}}</p>
+
+    <form action="/" method="post">
+
+      <input type="text" name="letterInput" placeholder="guess a letter">
+      <button type="submit">Guess</button>
+
+    </form>
+    <div class="lettersGuessed">
+      <p> {{guessed.letter}} </p>
+    </div>
+    <div class="errors">
+      <ul>
+        {{#errors}}
+        <p>{{msg}}</p>
+        {{/errors}}
+      </ul>
+    </div>
+
+
+  </body>
+</html>

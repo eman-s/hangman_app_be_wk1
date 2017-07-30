@@ -15,8 +15,10 @@
       <button type="submit">Guess</button>
 
     </form>
+    <br>
     <div class="lettersGuessed">
-      <p> {{guessed.letter}} </p>
+      <h3>Guessed Letters</h3>
+      <p> {{#guessed}} {{letter}} {{/guessed}} </p>
     </div>
     <div class="errors">
       <ul>

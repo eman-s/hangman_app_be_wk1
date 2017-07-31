@@ -59,18 +59,18 @@ app.post('/', function(req,res){
   req.assert(schema);
   req.getValidationResult().then(function(results) {
     if (results.isEmpty()) {
-
-      let id = parseInt(Math.random() * 1000);
-      newGuessObject = {
-        letter: req.body.letterInput,
-        id: id
-      }
-      guessedLetters.push(newGuessObject);
+      guessedLetters.push(req.body.letterInput);
       console.log(guessedLetters)
+      randomWordLetters.forEach(function(wordLetter){
+        if(guessedLetters.includes(wordLetter)){
+          console.log(wordLetter);
+        }
+      });
       res.render('content', {
         spaces: randomWordLetters,
         guessed: guessedLetters
       });
+
     } else {
       res.render('content', {
         spaces: randomWordLetters,
@@ -78,14 +78,19 @@ app.post('/', function(req,res){
         errors: results.array()
       });
     }
+
   });
 });
+
+
+// Not sure where to place this statement:
+
 
 
 
 app.listen(3000, function() {
   console.log("I want to play a game");
   // console.log(randomWord);
-  // console.log(randomWordLetters);
+  console.log(randomWordLetters);
 
 });

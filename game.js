@@ -38,12 +38,22 @@ let randomWord = words[parseInt(Math.random() * 100000)];
 let randomWordLetters = randomWord.split("");
 let guessedLetters = [];
 
+
 app.get('/', function(req, res) {
   res.render('content', {spaces : randomWordLetters});
 
 });
 
 app.post('/', function(req,res){
+  guessedLetters.push(req.body.letterInput);
+  let correctLetters = randomWordLetters.map(function(letter){
+    if(guessedLetters.includes(letter)){
+      return letter;
+    }else{
+      return '_';
+    }
+  });
+  console.log(correctLetters);
   var schema = {
     'letterInput': {
       notEmpty: true,
@@ -59,18 +69,11 @@ app.post('/', function(req,res){
   req.assert(schema);
   req.getValidationResult().then(function(results) {
     if (results.isEmpty()) {
-      guessedLetters.push(req.body.letterInput);
-      console.log(guessedLetters)
-      randomWordLetters.forEach(function(wordLetter){
-        if(guessedLetters.includes(wordLetter)){
-          console.log(wordLetter);
-        }
-      });
       res.render('content', {
         spaces: randomWordLetters,
         guessed: guessedLetters
       });
-
+      // console.log(guessedLetters)
     } else {
       res.render('content', {
         spaces: randomWordLetters,
@@ -78,12 +81,8 @@ app.post('/', function(req,res){
         errors: results.array()
       });
     }
-
   });
 });
-
-
-// Not sure where to place this statement:
 
 
 

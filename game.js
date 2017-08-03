@@ -40,9 +40,9 @@ let guessedLetters = [];
 
 
 app.get('/', function(req, res) {
-  res.render('content', {spaces : randomWordLetters});
-
+  res.render('content', {spaces: randomWordLetters})
 });
+
 
 app.post('/', function(req,res){
   guessedLetters.push(req.body.letterInput);
@@ -53,7 +53,6 @@ app.post('/', function(req,res){
       return '_';
     }
   });
-  console.log(correctLetters);
   var schema = {
     'letterInput': {
       notEmpty: true,
@@ -70,13 +69,13 @@ app.post('/', function(req,res){
   req.getValidationResult().then(function(results) {
     if (results.isEmpty()) {
       res.render('content', {
-        spaces: randomWordLetters,
+        letters: correctLetters,
         guessed: guessedLetters
       });
       // console.log(guessedLetters)
     } else {
       res.render('content', {
-        spaces: randomWordLetters,
+        letters: correctLetters,
         guessed: guessedLetters,
         errors: results.array()
       });

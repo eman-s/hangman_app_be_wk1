@@ -40,12 +40,16 @@ let guessedLetters = [];
 
 
 app.get('/', function(req, res) {
-  res.render('content', {spaces: randomWordLetters})
+  res.render('content', {randomWordLetters})
 });
 
 
 app.post('/', function(req,res){
+
+if (req.body.letterInput.split('') !== [0] ){
   guessedLetters.push(req.body.letterInput);
+  console.log(req.body.letterInput.split(''));
+}
   let correctLetters = randomWordLetters.map(function(letter){
     if(guessedLetters.includes(letter)){
       return letter;
@@ -67,6 +71,7 @@ app.post('/', function(req,res){
   };
   req.assert(schema);
   req.getValidationResult().then(function(results) {
+
     if (results.isEmpty()) {
       res.render('content', {
         letters: correctLetters,

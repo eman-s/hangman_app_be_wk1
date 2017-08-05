@@ -46,10 +46,12 @@ app.get('/', function(req, res) {
 
 app.post('/', function(req,res){
 
-if (req.body.letterInput.split('').length === 1 ){
+if (req.body.letterInput.split('').length === 1 && guessedLetters.includes(req.body.letterInput) === false ){
   guessedLetters.push(req.body.letterInput);
   console.log(req.body.letterInput.split(''));
-}
+  }
+
+
   let correctLetters = randomWordLetters.map(function(letter){
     if(guessedLetters.includes(letter)){
       return letter;

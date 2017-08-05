@@ -46,7 +46,7 @@ app.get('/', function(req, res) {
 
 app.post('/', function(req,res){
 
-if (req.body.letterInput.split('') !== [0] ){
+if (req.body.letterInput.split('').length === 1 ){
   guessedLetters.push(req.body.letterInput);
   console.log(req.body.letterInput.split(''));
 }

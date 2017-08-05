@@ -37,20 +37,27 @@ app.use(session({
 let randomWord = words[parseInt(Math.random() * 100000)];
 let randomWordLetters = randomWord.split("");
 let guessedLetters = [];
+let numberOfGuesses = 8;
 
 
 app.get('/', function(req, res) {
-  res.render('content', {randomWordLetters})
+  res.render('content', {randomWordLetters, numberOfGuesses})
 });
 
 
 app.post('/', function(req,res){
 
-if (req.body.letterInput.split('').length === 1 && guessedLetters.includes(req.body.letterInput) === false ){
-  guessedLetters.push(req.body.letterInput);
-  console.log(req.body.letterInput.split(''));
+  if (req.body.letterInput.split('').length === 1 && guessedLetters.includes(req.body.letterInput) === false ){
+    guessedLetters.push(req.body.letterInput);
+    numberOfGuesses -= 1
+    console.log(req.body.letterInput.split(''));
   }
 
+
+  if(guessedLetters.length > 8){
+    console.log('ran out of guesses')
+    res.render('content', {gameOver: "game over, you ran out of guesses"})
+  }
 
   let correctLetters = randomWordLetters.map(function(letter){
     if(guessedLetters.includes(letter)){
@@ -59,6 +66,11 @@ if (req.body.letterInput.split('').length === 1 && guessedLetters.includes(req.b
       return '_';
     }
   });
+
+
+
+
+
   var schema = {
     'letterInput': {
       notEmpty: true,
@@ -77,17 +89,20 @@ if (req.body.letterInput.split('').length === 1 && guessedLetters.includes(req.b
     if (results.isEmpty()) {
       res.render('content', {
         letters: correctLetters,
-        guessed: guessedLetters
+        guessed: guessedLetters,
+        numberOfGuesses
       });
       // console.log(guessedLetters)
     } else {
       res.render('content', {
         letters: correctLetters,
         guessed: guessedLetters,
+        numberOfGuesses,
         errors: results.array()
       });
     }
   });
+
 });
 
 

@@ -7,8 +7,9 @@
   <body>
     <h1>guess the word</h1>
 
-  <p>{{#letters}} {{ . }} {{/letters}}</p>
+  <p>{{#letters}} {{ . }} {{/letters}}  Guesses Left: {{#numberOfGuesses}}{{.}}{{/numberOfGuesses}}</p> 
   <p>{{#randomWordLetters}} {{ _ }} {{/randomWordLetters}}</p>
+    {{#gameOver}}<p>{{.}}</p>{{/gameOver}}
 
     <form action="/" method="post">
 

@@ -41,9 +41,13 @@ let numberOfGuesses = 8;
 
 
 app.get('/', function(req, res) {
+  console.log(randomWordLetters);
   res.render('content', {randomWordLetters, numberOfGuesses})
 });
 
+app.get('/youwin', function (req, res){
+  res.render('youwin')
+})
 
 app.post('/', function(req,res){
 
@@ -55,8 +59,7 @@ app.post('/', function(req,res){
 
 
   if(guessedLetters.length > 8){
-    console.log('ran out of guesses')
-    res.render('content', {gameOver: "game over, you ran out of guesses"})
+    res.redirect('/gameover')
   }
 
   let correctLetters = randomWordLetters.map(function(letter){
@@ -66,9 +69,6 @@ app.post('/', function(req,res){
       return '_';
     }
   });
-
-
-
 
 
   var schema = {
@@ -101,9 +101,22 @@ app.post('/', function(req,res){
         errors: results.array()
       });
     }
-  });
 
+  });
+  let isSame = correctLetters.every(function(element, i) {
+    return element === randomWordLetters[i];
 });
+
+  if(isSame){
+    res.redirect('/youwin')
+  }
+});
+
+app.get('/gameover', function(req, res){
+  req.session.destroy();
+  res.render('gameover')
+})
+
 
 
 

@@ -58,6 +58,7 @@ app.post('/', function(req,res){
   }
 
 
+
   if(guessedLetters.length > 8){
     res.redirect('/gameover')
   }
@@ -70,6 +71,9 @@ app.post('/', function(req,res){
     }
   });
 
+ if (correctLetters.includes(req.body.letterInput)){
+   numberOfGuesses += 1
+ }
 
   var schema = {
     'letterInput': {

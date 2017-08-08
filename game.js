@@ -42,7 +42,7 @@ let numberOfGuesses = 8;
 
 app.get('/', function(req, res) {
   console.log(randomWordLetters);
-  res.render('content', {randomWordLetters, numberOfGuesses})
+  res.render('content', {spaces : randomWordLetters, numberOfGuesses})
 });
 
 app.get('/youwin', function (req, res){
